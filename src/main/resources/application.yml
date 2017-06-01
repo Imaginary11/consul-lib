@@ -1,0 +1,17 @@
+consul:
+  host: 172.16.12.206
+  port: 8500
+  enabled: true
+  discovery:
+    serviceId: config
+    serviceName: config-service
+    serviceHost: 172.16.12.201
+    servicePort: 80
+    healthCheckType: tcp
+    healthCheckUrl:
+    healthCheckInterval: 10s
+    tags: api
+
+
+
+
