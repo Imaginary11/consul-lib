@@ -62,7 +62,7 @@ public abstract class AbstractConsulFactory implements ConsulFactory {
     @Override
     public boolean deregister(String serviceId) {
         try {
-            if (consulConfig == null) {
+            if (consulConfig == null || !consulConfig.isEnabled()) {
                 logger.error("service deregistration had been cancel duo to config");
                 return false;
             }
