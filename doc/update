@@ -1,0 +1,2 @@
+1.0.1 replace consul config file with parameter
+1.0.2 fix bug : consul enabled config not effective when deregister service
