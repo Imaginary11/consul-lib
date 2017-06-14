@@ -1,6 +1,5 @@
 package cn.org.imaginary.common.core;
 
-import cn.org.imaginary.common.model.ConsulConfig;
 import com.orbitz.consul.model.health.ServiceHealth;
 
 import java.util.List;
@@ -11,9 +10,9 @@ import java.util.List;
  * @since 1.0
  */
 public interface ConsulFactory {
-    boolean register(ConsulConfig consulConfig);
+    boolean register();
 
-    boolean deregister(ConsulConfig consulConfig, String serviceId);
+    boolean deregister(String serviceId);
 
-    List<ServiceHealth> getService(ConsulConfig consulConfig, String serviceName);
+    List<ServiceHealth> getService(String serviceName);
 }

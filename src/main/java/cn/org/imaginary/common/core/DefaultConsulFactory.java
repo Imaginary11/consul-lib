@@ -13,10 +13,14 @@ import com.orbitz.consul.model.agent.Registration;
  */
 public class DefaultConsulFactory extends AbstractConsulFactory {
 
-    @Override
-    protected Registration.RegCheck getHealthCheck(ConsulConfig consulConfig) {
+    public DefaultConsulFactory(ConsulConfig consulConfig) {
+        super(consulConfig);
+    }
 
-        ConsulDiscovery discovery = consulConfig.getDiscovery();
+    @Override
+    protected Registration.RegCheck getHealthCheck() {
+
+        ConsulDiscovery discovery = super.consulConfig.getDiscovery();
 
         String healthCheckType = discovery.getHealthCheckType();
         ImmutableRegCheck.Builder builder = null;

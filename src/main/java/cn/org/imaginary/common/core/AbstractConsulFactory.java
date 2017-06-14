@@ -20,10 +20,15 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class AbstractConsulFactory implements ConsulFactory {
+    protected ConsulConfig consulConfig = null;
     private final Logger logger = LoggerFactory.getLogger(AbstractConsulFactory.class);
 
+    public AbstractConsulFactory(ConsulConfig consulConfig) {
+        this.consulConfig = consulConfig;
+    }
+
     @Override
-    public boolean register(ConsulConfig consulConfig) {
+    public boolean register() {
         try {
             logger.info("consul config == " + consulConfig);
             if (consulConfig == null || StringUtils.isEmpty(consulConfig.getDiscovery())
@@ -31,7 +36,7 @@ public abstract class AbstractConsulFactory implements ConsulFactory {
                 logger.error("service registration had been cancel duo to consul config  ");
                 return false;
             }
-            Registration.RegCheck check = getHealthCheck(consulConfig);
+            Registration.RegCheck check = getHealthCheck();
             if (check == null) {
                 logger.error("service registration had been cancel duo to check config");
                 return false;
@@ -55,7 +60,7 @@ public abstract class AbstractConsulFactory implements ConsulFactory {
     }
 
     @Override
-    public boolean deregister(ConsulConfig consulConfig, String serviceId) {
+    public boolean deregister(String serviceId) {
         try {
             if (consulConfig == null) {
                 logger.error("service deregistration had been cancel duo to config");
@@ -73,8 +78,8 @@ public abstract class AbstractConsulFactory implements ConsulFactory {
     }
 
     @Override
-    public List<ServiceHealth> getService(ConsulConfig consulConfig, String serviceName) {
-        Registration.RegCheck check = getHealthCheck(consulConfig);
+    public List<ServiceHealth> getService(String serviceName) {
+        Registration.RegCheck check = getHealthCheck();
         if (consulConfig == null || check == null) {
             logger.error("get service had been cancel duo to config");
             return null;
@@ -88,6 +93,6 @@ public abstract class AbstractConsulFactory implements ConsulFactory {
         return serviceHealths;
     }
 
-    protected abstract Registration.RegCheck getHealthCheck(ConsulConfig consulConfig);
+    protected abstract Registration.RegCheck getHealthCheck();
 
 }
